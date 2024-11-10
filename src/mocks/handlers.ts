@@ -1,20 +1,70 @@
 import { http, HttpResponse } from "msw";
 import { CreateTaskInput, Task, UpdateTaskInput } from "@/types/task";
-import { createTask } from "@/mocks/task-utils";
+import { createTask } from "./task-utils";
 
 // Nosso "banco de dados" em memória
 let tasks: Task[] = [
   createTask({
-    title: "Estudar React",
-    description: "Aprender sobre hooks e context",
+    title: "Implementar autenticação",
+    description: "Adicionar login com Google e GitHub",
     priority: "high",
-    tags: ["estudos", "programação"],
+    status: "in-progress",
+    tags: ["feature", "segurança"],
+    dueDate: new Date(Date.now() + 2 * 24 * 60 * 60 * 1000), // 2 dias
   }),
   createTask({
-    title: "Fazer compras",
-    description: "Comprar itens para a semana",
+    title: "Corrigir bug no filtro de tarefas",
+    description: "O filtro não está funcionando corretamente para tags",
+    priority: "high",
+    status: "todo",
+    tags: ["bug", "urgente"],
+    dueDate: new Date(Date.now() + 24 * 60 * 60 * 1000), // 1 dia
+  }),
+  createTask({
+    title: "Atualizar documentação",
+    description: "Documentar novas funcionalidades implementadas",
+    priority: "low",
+    status: "todo",
+    tags: ["documentação"],
+    dueDate: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 dias
+  }),
+  createTask({
+    title: "Otimizar performance",
+    description: "Melhorar tempo de carregamento da aplicação",
     priority: "medium",
-    dueDate: new Date(Date.now() + 86400000), // amanhã
+    status: "in-progress",
+    tags: ["performance", "tech-debt"],
+  }),
+  createTask({
+    title: "Reunião com stakeholders",
+    description: "Apresentar progresso do projeto",
+    priority: "medium",
+    status: "done",
+    tags: ["reunião", "apresentação"],
+    dueDate: new Date(Date.now() - 24 * 60 * 60 * 1000), // ontem
+  }),
+  createTask({
+    title: "Design System",
+    description: "Criar componentes base do design system",
+    priority: "high",
+    status: "done",
+    tags: ["ui", "design"],
+    dueDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 dias atrás
+  }),
+  createTask({
+    title: "Testes unitários",
+    description: "Aumentar cobertura de testes",
+    priority: "medium",
+    status: "todo",
+    tags: ["testes", "qualidade"],
+  }),
+  createTask({
+    title: "Refatorar código legado",
+    description: "Modernizar componentes antigos",
+    priority: "low",
+    status: "in-progress",
+    tags: ["refactor", "tech-debt"],
+    dueDate: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 dias
   }),
 ];
 

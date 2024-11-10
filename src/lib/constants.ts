@@ -13,13 +13,13 @@ export const TASK_STATUS: { label: string; value: TaskStatus }[] = [
 ];
 
 export const TASK_STATUS_COLORS = {
-  todo: "bg-slate-400",
-  "in-progress": "bg-blue-400",
-  done: "bg-green-400",
+  todo: "bg-slate-400/20 hover:bg-slate-400/30",
+  "in-progress": "bg-blue-400/20 hover:bg-blue-400/30",
+  done: "bg-green-400/20 hover:bg-green-400/30",
 } as const;
 
 export const TASK_PRIORITY_COLORS = {
-  low: "bg-slate-400",
-  medium: "bg-yellow-400",
-  high: "bg-red-400",
+  low: "bg-slate-400/20 hover:bg-slate-400/30",
+  medium: "bg-yellow-400/20 hover:bg-yellow-400/30",
+  high: "bg-red-400/20 hover:bg-red-400/30",
 } as const;

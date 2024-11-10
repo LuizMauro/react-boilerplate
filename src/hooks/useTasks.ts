@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { Task, CreateTaskInput, UpdateTaskInput } from "@/types/task";
 import { tasksApi } from "@/lib/api/tasks";
 
@@ -19,6 +19,10 @@ export function useTasks() {
       setLoading(false);
     }
   }, []);
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
 
   const createTask = useCallback(async (input: CreateTaskInput) => {
     try {

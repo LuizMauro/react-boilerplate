@@ -2,6 +2,7 @@ import { Header } from "@/components/layout/Header";
 import { BaseLayout } from "@/components/layout/BaseLayout";
 import { CreateTaskDialog } from "@/components/tasks/CreateTaskDialog";
 import { TaskList } from "@/components/tasks/TaskList";
+import { TaskFilters } from "@/components/tasks/TaskFilters";
 import { useTaskContext } from "@/context/task-context";
 
 function App() {
@@ -16,7 +17,9 @@ function App() {
           <CreateTaskDialog />
         </div>
 
-        <div className="space-y-4">
+        <TaskFilters />
+
+        <div className="mt-6">
           {loading && (
             <div className="flex items-center justify-center p-4">
               <p className="text-muted-foreground">Carregando tarefas...</p>
