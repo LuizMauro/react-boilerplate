@@ -1,6 +1,6 @@
 import { TableCell, TableRow } from "@/components/ui/table";
 import { Task, UpdateTaskInput } from "@/types/task";
-import { TASK_STATUS_COLORS } from "@/lib/constants";
+import { TASK_STATUS_COLORS_ROW } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import {
   TaskTitle,
@@ -29,8 +29,8 @@ export function TaskTableRow({
       <TableCell className="p-0">
         <div
           className={cn(
-            "w-1 h-full absolute left-0",
-            TASK_STATUS_COLORS[task.status]
+            "w-1 h-full absolute left-0 top-0",
+            TASK_STATUS_COLORS_ROW[task.status]
           )}
         />
       </TableCell>
