@@ -1,0 +1,37 @@
+. Dashboard/Overview:
+- Gráficos mais detalhados
+- Métricas importantes
+- Tendências de conclusão
+- Produtividade por período
+
+Kanban Board:
+// src/pages/KanbanPage.tsx
+- Visualização em colunas (Todo, In Progress, Done)
+- Drag and Drop entre colunas
+- Visualização mais visual das tarefas
+
+Calendário:
+// src/pages/CalendarPage.tsx
+- Visualização em calendário
+- Prazos e marcos importantes
+- Visão mensal/semanal/diária
+
+Tags/Categorias:
+// src/pages/TagsPage.tsx
+- Gerenciamento de tags
+- Estatísticas por tag
+- Agrupamento de tarefas por tag
+
+Relatórios:
+// src/pages/ReportsPage.tsx
+- Relatórios detalhados
+- Exportação de dados
+- Gráficos avançados
+- Métricas de produtividade
+
+Configurações:
+// src/pages/SettingsPage.tsx
+- Preferências do usuário
+- Temas
+- Notificações
+- Atalhos de teclado
