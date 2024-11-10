@@ -9,16 +9,14 @@ import { Button } from "@/components/ui/button";
 import { CreateTaskForm } from "./CreateTaskForm";
 import { CreateTaskInput } from "@/types/task";
 import { useState } from "react";
+import { useTaskContext } from "@/context/task-context";
 
-interface CreateTaskDialogProps {
-  onCreateTask: (data: CreateTaskInput) => Promise<void>;
-}
-
-export function CreateTaskDialog({ onCreateTask }: CreateTaskDialogProps) {
+export function CreateTaskDialog() {
   const [open, setOpen] = useState(false);
+  const { createTask } = useTaskContext();
 
   const handleSubmit = async (data: CreateTaskInput) => {
-    await onCreateTask(data);
+    await createTask(data);
     setOpen(false);
   };
 

@@ -1,37 +1,11 @@
 import { Header } from "@/components/layout/Header";
 import { BaseLayout } from "@/components/layout/BaseLayout";
-import { useEffect } from "react";
-import { useTasks } from "@/hooks/useTasks";
 import { CreateTaskDialog } from "@/components/tasks/CreateTaskDialog";
 import { TaskList } from "@/components/tasks/TaskList";
-import { Task, UpdateTaskInput } from "@/types/task";
+import { useTaskContext } from "@/context/task-context";
 
 function App() {
-  const {
-    tasks,
-    loading,
-    error,
-    fetchTasks,
-    createTask,
-    updateTask,
-    deleteTask,
-  } = useTasks();
-
-  useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
-
-  const handleStatusChange = async (id: string, status: Task["status"]) => {
-    await updateTask(id, { status });
-  };
-
-  const handleCreateTask = async (data: CreateTaskInput) => {
-    await createTask(data);
-  };
-
-  const handleEditTask = async (id: string, data: UpdateTaskInput) => {
-    await updateTask(id, data);
-  };
+  const { tasks, loading, error } = useTaskContext();
 
   return (
     <div className="min-h-screen bg-background">
@@ -39,7 +13,7 @@ function App() {
       <BaseLayout>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold text-foreground">Minhas Tarefas</h2>
-          <CreateTaskDialog onCreateTask={handleCreateTask} />
+          <CreateTaskDialog />
         </div>
 
         <div className="space-y-4">
@@ -63,14 +37,7 @@ function App() {
             </div>
           )}
 
-          {tasks.length > 0 && (
-            <TaskList
-              tasks={tasks}
-              onStatusChange={handleStatusChange}
-              onEdit={handleEditTask}
-              onDelete={deleteTask}
-            />
-          )}
+          {tasks.length > 0 && <TaskList />}
         </div>
       </BaseLayout>
     </div>

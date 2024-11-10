@@ -3,6 +3,7 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "./index.css";
 import { ThemeProvider } from "@/context/theme-provider";
+import { TaskProvider } from "@/context/task-context";
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
@@ -12,6 +13,7 @@ async function enableMocking() {
   const { worker } = await import("./mocks/browser");
   return worker.start({
     onUnhandledRequest: "bypass",
+    quiet: true,
   });
 }
 
@@ -19,7 +21,9 @@ enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
       <ThemeProvider>
-        <App />
+        <TaskProvider>
+          <App />
+        </TaskProvider>
       </ThemeProvider>
     </React.StrictMode>
   );

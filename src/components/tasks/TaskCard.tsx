@@ -14,21 +14,23 @@ import { Badge } from "@/components/ui/badge";
 import { EditTaskDialog } from "./EditTaskDialog";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTaskContext } from "@/context/task-context";
 
 interface TaskCardProps {
   task: Task;
-  onStatusChange?: (id: string, status: Task["status"]) => void;
-  onEdit?: (id: string, data: UpdateTaskInput) => Promise<void>;
-  onDelete?: (id: string) => void;
 }
 
-export function TaskCard({
-  task,
-  onStatusChange,
-  onEdit,
-  onDelete,
-}: TaskCardProps) {
+export function TaskCard({ task }: TaskCardProps) {
+  const { updateTask, deleteTask } = useTaskContext();
   const isOverdue = isTaskOverdue(task);
+
+  const handleStatusChange = async (status: Task["status"]) => {
+    await updateTask(task.id, { status });
+  };
+
+  const handleEdit = async (id: string, data: UpdateTaskInput) => {
+    await updateTask(id, data);
+  };
 
   return (
     <Card
@@ -83,26 +85,22 @@ export function TaskCard({
         <select
           className="text-sm bg-background border rounded-md px-2 py-1"
           value={task.status}
-          onChange={(e) =>
-            onStatusChange?.(task.id, e.target.value as Task["status"])
-          }
+          onChange={(e) => handleStatusChange(e.target.value as Task["status"])}
         >
           <option value="todo">A fazer</option>
           <option value="in-progress">Em andamento</option>
           <option value="done">Concluída</option>
         </select>
         <div className="flex gap-2">
-          {onEdit && <EditTaskDialog task={task} onEditTask={onEdit} />}
-          {onDelete && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onDelete(task.id)}
-              className="text-destructive hover:text-destructive/80"
-            >
-              <Trash2 className="h-4 w-4" />
-            </Button>
-          )}
+          <EditTaskDialog task={task} onEditTask={handleEdit} />
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => deleteTask(task.id)}
+            className="text-destructive hover:text-destructive/80"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
         </div>
       </CardFooter>
     </Card>
