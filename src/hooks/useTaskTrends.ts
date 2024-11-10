@@ -4,7 +4,7 @@ export function useTaskTrends(tasks: Task[]) {
   const today = new Date();
   const thirtyDaysAgo = new Date(today.getTime() - 30 * 24 * 60 * 60 * 1000);
 
-  const recentTasks = tasks.filter(
+  const recentTasks = tasks?.filter(
     (task) => new Date(task.createdAt) >= thirtyDaysAgo
   );
 
@@ -22,8 +22,8 @@ export function useTaskTrends(tasks: Task[]) {
       : 0;
 
   return {
-    tasksLastMonth: recentTasks.length,
-    completedLastMonth: recentTasks.filter((task) => task.status === "done")
+    tasksLastMonth: recentTasks?.length,
+    completedLastMonth: recentTasks?.filter((task) => task.status === "done")
       .length,
     avgCompletionDays: Math.round(avgCompletionTime / (1000 * 60 * 60 * 24)),
   };

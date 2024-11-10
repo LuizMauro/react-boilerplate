@@ -9,15 +9,15 @@ export function useTaskChartData(tasks: Task[]) {
   });
 
   const tasksByDate = last7Days.map((date) => {
-    const dayTasks = tasks.filter(
+    const dayTasks = tasks?.filter(
       (task) => new Date(task.createdAt).toISOString().split("T")[0] === date
     );
 
     return {
       date,
-      total: dayTasks.length,
-      completed: dayTasks.filter((task) => task.status === "done").length,
-      inProgress: dayTasks.filter((task) => task.status === "in-progress")
+      total: dayTasks?.length,
+      completed: dayTasks?.filter((task) => task.status === "done").length,
+      inProgress: dayTasks?.filter((task) => task.status === "in-progress")
         .length,
     };
   });
