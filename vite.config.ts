@@ -15,26 +15,15 @@ export default defineConfig({
     },
   },
   build: {
+    minify: "esbuild",
     rollupOptions: {
       output: {
-        manualChunks: (id) => {
-          if (id.includes("node_modules")) {
-            if (id.includes("react")) {
-              return "vendor-react";
-            }
-            if (id.includes("@radix-ui")) {
-              return "vendor-radix";
-            }
-            if (id.includes("chart.js")) {
-              return "vendor-chart";
-            }
-            return "vendor";
-          }
+        manualChunks: {
+          vendor: ["react", "react-dom"],
+          charts: ["chart.js", "react-chartjs-2"],
         },
       },
     },
     target: "esnext",
-    minify: "terser",
-    cssMinify: true,
   },
 });
