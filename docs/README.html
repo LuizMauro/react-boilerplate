@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager - Documentação</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, sans-serif;
+        line-height: 1.6;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 2rem;
+        color: #333;
+      }
+      h1,
+      h2,
+      h3 {
+        color: #1a1a1a;
+      }
+      code {
+        background: #f4f4f4;
+        padding: 0.2em 0.4em;
+        border-radius: 3px;
+        font-size: 0.9em;
+      }
+      pre {
+        background: #f4f4f4;
+        padding: 1rem;
+        border-radius: 5px;
+        overflow-x: auto;
+      }
+      .feature {
+        margin-bottom: 2rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Task Manager - Projeto de Estudo React</h1>
+
+    <section>
+      <h2>Sobre o Projeto</h2>
+      <p>
+        Este é um projeto de estudo focado em boas práticas de organização e
+        arquitetura em React. O projeto implementa um gerenciador de tarefas que
+        serve como exemplo prático de várias boas práticas e padrões de projeto
+        modernos.
+      </p>
+    </section>
+
+    <section>
+      <h2>Boas Práticas Implementadas</h2>
+
+      <div class="feature">
+        <h3>1. Componentes "Burros" (Presentational Components)</h3>
+        <p>Separação clara entre componentes de apresentação e lógica:</p>
+        <ul>
+          <li>
+            <code>TaskCard</code>: Apenas renderiza dados, sem lógica de negócio
+          </li>
+          <li>
+            <code>StatCard</code>: Componente reutilizável para exibição de
+            estatísticas
+          </li>
+          <li>Lógica de negócio movida para hooks e contextos</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>2. Custom Hooks</h3>
+        <p>Encapsulamento de lógica reutilizável:</p>
+        <ul>
+          <li>
+            <code>useTaskStats</code>: Cálculos de estatísticas das tarefas
+          </li>
+          <li><code>useTaskFilters</code>: Gerenciamento de filtros com URL</li>
+          <li>
+            <code>useTasks</code>: Gerenciamento de estado com React Query
+          </li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>3. Organização por Feature</h3>
+        <p>Estrutura de pastas organizada por funcionalidade:</p>
+        <ul>
+          <li>
+            <code>components/tasks/</code>: Componentes específicos de tarefas
+          </li>
+          <li><code>components/dashboard/</code>: Componentes do dashboard</li>
+          <li><code>components/ui/</code>: Componentes base reutilizáveis</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>4. Gerenciamento de Estado</h3>
+        <p>Múltiplas estratégias de estado:</p>
+        <ul>
+          <li>React Query para estado do servidor</li>
+          <li>Context API para estado global</li>
+          <li>URL para estado de filtros</li>
+          <li>Estado local onde apropriado</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>5. TypeScript e Tipagem</h3>
+        <p>Uso extensivo de TypeScript:</p>
+        <ul>
+          <li>Interfaces bem definidas para dados</li>
+          <li>Types para valores enumerados</li>
+          <li>Props tipadas em componentes</li>
+          <li>Tipagem de hooks e contextos</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>6. Mock de API</h3>
+        <p>Desenvolvimento independente do backend:</p>
+        <ul>
+          <li>MSW para interceptação de requisições</li>
+          <li>Dados mock realistas</li>
+          <li>Simulação de latência e erros</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>7. Componentização Eficiente</h3>
+        <p>Decomposição inteligente de componentes:</p>
+        <ul>
+          <li>Componentes pequenos e focados</li>
+          <li>Reutilização através de composição</li>
+          <li>Props para configuração</li>
+          <li>Children para flexibilidade</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>8. Estilização Moderna</h3>
+        <p>Abordagem moderna para estilos:</p>
+        <ul>
+          <li>Tailwind CSS para utilidades</li>
+          <li>Variáveis CSS para temas</li>
+          <li>Componentes shadcn/ui como base</li>
+          <li>Sistema de cores consistente</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>9. Feedback e UX</h3>
+        <p>Atenção à experiência do usuário:</p>
+        <ul>
+          <li>Estados de loading</li>
+          <li>Tratamento de erros</li>
+          <li>Confirmações de ações</li>
+          <li>Feedback visual</li>
+        </ul>
+      </div>
+
+      <div class="feature">
+        <h3>10. Código Limpo</h3>
+        <p>Práticas de código limpo:</p>
+        <ul>
+          <li>Nomes descritivos</li>
+          <li>Funções pequenas e focadas</li>
+          <li>DRY (Don't Repeat Yourself)</li>
+          <li>Separação de responsabilidades</li>
+        </ul>
+      </div>
+    </section>
+
+    <section>
+      <h2>Padrões de Projeto</h2>
+      <ul>
+        <li>
+          <strong>Provider Pattern</strong>: Usado no ThemeProvider e
+          TaskProvider
+        </li>
+        <li>
+          <strong>Compound Components</strong>: Implementado nos componentes de
+          formulário
+        </li>
+        <li><strong>Render Props</strong>: Usado em componentes de lista</li>
+        <li><strong>Custom Hooks</strong>: Para reutilização de lógica</li>
+        <li>
+          <strong>Container/Presentational</strong>: Separação de lógica e
+          apresentação
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Conclusão</h2>
+      <p>
+        Este projeto demonstra como diferentes padrões e práticas podem ser
+        combinados para criar uma aplicação React moderna, manutenível e
+        escalável. Cada decisão de arquitetura foi tomada considerando o
+        equilíbrio entre complexidade e benefício, resultando em um código
+        organizado e de fácil manutenção.
+      </p>
+    </section>
+  </body>
+</html>
