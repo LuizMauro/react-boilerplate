@@ -25,6 +25,9 @@ export default defineConfig({
             if (id.includes("@radix-ui")) {
               return "vendor-radix";
             }
+            if (id.includes("chart.js")) {
+              return "vendor-chart";
+            }
             return "vendor";
           }
         },
