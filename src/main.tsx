@@ -1,19 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { RouterProvider } from "react-router-dom";
-import { router } from "./routes";
-import "./index.css";
-import { ThemeProvider } from "@/context/theme-provider";
+import { BrowserRouter } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { App } from "./App";
+import "./index.css";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 1000 * 60,
-      retry: 1,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 async function enableMocking() {
   if (process.env.NODE_ENV !== "development") {
@@ -21,19 +13,16 @@ async function enableMocking() {
   }
 
   const { worker } = await import("./mocks/browser");
-  return worker.start({
-    onUnhandledRequest: "bypass",
-    quiet: true,
-  });
+  return worker.start();
 }
 
 enableMocking().then(() => {
   ReactDOM.createRoot(document.getElementById("root")!).render(
     <React.StrictMode>
       <QueryClientProvider client={queryClient}>
-        <ThemeProvider>
-          <RouterProvider router={router} />
-        </ThemeProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
       </QueryClientProvider>
     </React.StrictMode>
   );
