@@ -3,6 +3,7 @@ import { BaseLayout } from "@/components/layout/BaseLayout";
 import { TaskList } from "@/components/tasks/list";
 import { TaskFilters } from "@/components/tasks/TaskFilters";
 import { TaskHeader } from "@/components/tasks/TaskHeader";
+import { TaskStats } from "@/components/tasks/TaskStats";
 import {
   TaskEmptyState,
   TaskLoadingState,
@@ -18,8 +19,10 @@ function App() {
       <Header />
       <BaseLayout>
         <TaskHeader />
-        <TaskFilters />
-
+        <TaskStats />
+        <div className="mt-6">
+          <TaskFilters />
+        </div>
         <div className="mt-6">
           {loading && <TaskLoadingState />}
           {error && <TaskError message={error} />}
