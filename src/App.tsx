@@ -1,8 +1,13 @@
 import { Header } from "@/components/layout/Header";
 import { BaseLayout } from "@/components/layout/BaseLayout";
-import { CreateTaskDialog } from "@/components/tasks/CreateTaskDialog";
-import { TaskList } from "@/components/tasks/TaskList";
+import { TaskList } from "@/components/tasks/list";
 import { TaskFilters } from "@/components/tasks/TaskFilters";
+import { TaskHeader } from "@/components/tasks/TaskHeader";
+import {
+  TaskEmptyState,
+  TaskLoadingState,
+  TaskError,
+} from "@/components/tasks/states";
 import { useTaskContext } from "@/context/task-context";
 
 function App() {
@@ -12,34 +17,13 @@ function App() {
     <div className="min-h-screen bg-background">
       <Header />
       <BaseLayout>
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-foreground">Minhas Tarefas</h2>
-          <CreateTaskDialog />
-        </div>
-
+        <TaskHeader />
         <TaskFilters />
 
         <div className="mt-6">
-          {loading && (
-            <div className="flex items-center justify-center p-4">
-              <p className="text-muted-foreground">Carregando tarefas...</p>
-            </div>
-          )}
-
-          {error && (
-            <div className="bg-destructive/10 text-destructive p-4 rounded-lg">
-              <p>{error}</p>
-            </div>
-          )}
-
-          {!loading && !error && tasks.length === 0 && (
-            <div className="text-center p-8 bg-muted rounded-lg">
-              <p className="text-muted-foreground">
-                Nenhuma tarefa encontrada. Crie uma nova tarefa para começar!
-              </p>
-            </div>
-          )}
-
+          {loading && <TaskLoadingState />}
+          {error && <TaskError message={error} />}
+          {!loading && !error && tasks.length === 0 && <TaskEmptyState />}
           {tasks.length > 0 && <TaskList />}
         </div>
       </BaseLayout>

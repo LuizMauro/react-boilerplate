@@ -13,7 +13,7 @@ import { useState } from "react";
 
 interface DeleteTaskDialogProps {
   taskTitle: string;
-  onConfirm: () => Promise<string>;
+  onConfirm: () => Promise<void | string>;
 }
 
 export function DeleteTaskDialog({

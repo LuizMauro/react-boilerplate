@@ -17,6 +17,7 @@ export interface CreateTaskInput {
   title: string;
   description?: string;
   priority: TaskPriority;
+  status?: TaskStatus;
   dueDate?: Date;
   tags?: string[];
 }

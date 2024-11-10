@@ -11,9 +11,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { EditTaskDialog } from "./EditTaskDialog";
 import { useTaskContext } from "@/context/task-context";
-import { DeleteTaskDialog } from "./DeleteTaskDialog";
+import { DeleteTaskDialog, EditTaskDialog } from "./dialogs";
 
 interface TaskCardProps {
   task: Task;

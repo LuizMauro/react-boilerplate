@@ -6,7 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { CreateTaskForm } from "./CreateTaskForm";
+import { CreateTaskForm } from "../form";
 import { CreateTaskInput } from "@/types/task";
 import { useState } from "react";
 import { useTaskContext } from "@/context/task-context";

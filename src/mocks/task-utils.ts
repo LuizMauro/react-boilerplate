@@ -6,7 +6,7 @@ export function createTask(input: CreateTaskInput): Task {
   return {
     id: crypto.randomUUID(),
     ...input,
-    status: "todo",
+    status: input.status || "todo",
     createdAt: now,
     updatedAt: now,
   };

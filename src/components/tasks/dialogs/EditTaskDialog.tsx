@@ -6,7 +6,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { EditTaskForm } from "./EditTaskForm";
+import { EditTaskForm } from "../form";
 import { Task, UpdateTaskInput } from "@/types/task";
 import { useState } from "react";
 import { Pencil } from "lucide-react";
