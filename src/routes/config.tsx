@@ -1,46 +1,54 @@
-import { LayoutDashboard, ListTodo, Settings } from "lucide-react";
-import { DashboardPage } from "@/pages/DashboardPage";
-import { TasksPage } from "@/pages/TasksPage";
-import { SettingsPage } from "@/pages/SettingsPage";
-import { LoginPage } from "@/pages/LoginPage";
+import { lazy, Suspense } from "react";
+import { BaseLayout } from "@/components/layout/BaseLayout";
 
-interface RouteConfig {
-  path: string;
-  element: React.ReactNode;
-  icon?: React.ReactNode;
-  label?: string;
-}
+// Lazy loading dos componentes de páginas
+const Login = lazy(() => import("../pages/LoginPage"));
+const Dashboard = lazy(() => import("../pages/DashboardPage"));
+const Tasks = lazy(() => import("../pages/TasksPage"));
 
-interface RoutesConfig {
-  public: RouteConfig[];
-  protected: RouteConfig[];
-}
+// Componente de loading
+const PageLoader = () => (
+  <div className="flex h-screen w-full items-center justify-center">
+    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+  </div>
+);
 
-export const routes: RoutesConfig = {
+// Wrapper para Suspense
+const LazyComponent = ({ children }: { children: React.ReactNode }) => (
+  <Suspense fallback={<PageLoader />}>{children}</Suspense>
+);
+
+export const routes = {
   public: [
     {
       path: "/login",
-      element: <LoginPage />,
+      element: (
+        <LazyComponent>
+          <Login />
+        </LazyComponent>
+      ),
     },
   ],
   protected: [
     {
       path: "/",
-      element: <DashboardPage />,
-      icon: <LayoutDashboard className="h-5 w-5" />,
-      label: "Dashboard",
+      element: (
+        <BaseLayout>
+          <LazyComponent>
+            <Dashboard />
+          </LazyComponent>
+        </BaseLayout>
+      ),
     },
     {
       path: "/tasks",
-      element: <TasksPage />,
-      icon: <ListTodo className="h-5 w-5" />,
-      label: "Tarefas",
-    },
-    {
-      path: "/settings",
-      element: <SettingsPage />,
-      icon: <Settings className="h-5 w-5" />,
-      label: "Configurações",
+      element: (
+        <BaseLayout>
+          <LazyComponent>
+            <Tasks />
+          </LazyComponent>
+        </BaseLayout>
+      ),
     },
   ],
 };

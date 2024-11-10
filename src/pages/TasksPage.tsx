@@ -8,7 +8,7 @@ import {
 } from "@/components/tasks/states";
 import { useTaskContext } from "@/context/task-context";
 
-export function TasksPage() {
+export default function TasksPage() {
   const { tasks, loading, error } = useTaskContext();
 
   return (

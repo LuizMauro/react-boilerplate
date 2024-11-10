@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/auth-context";
 
@@ -12,5 +13,9 @@ export function PublicRoutes() {
     return <Navigate to="/" replace />;
   }
 
-  return <Outlet />;
+  return (
+    <Suspense fallback={<div>Carregando...</div>}>
+      <Outlet />
+    </Suspense>
+  );
 }

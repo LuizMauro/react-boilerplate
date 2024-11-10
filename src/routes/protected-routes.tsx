@@ -1,12 +1,16 @@
+import { Suspense } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "@/context/auth-context";
-import { BaseLayout } from "@/components/layout/BaseLayout";
 
 export function ProtectedRoutes() {
   const { user, loading } = useAuth();
 
   if (loading) {
-    return <div>Carregando...</div>;
+    return (
+      <div className="flex h-screen w-full items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+      </div>
+    );
   }
 
   if (!user) {
@@ -14,8 +18,14 @@ export function ProtectedRoutes() {
   }
 
   return (
-    <BaseLayout>
+    <Suspense
+      fallback={
+        <div className="flex h-screen w-full items-center justify-center">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+        </div>
+      }
+    >
       <Outlet />
-    </BaseLayout>
+    </Suspense>
   );
 }

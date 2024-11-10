@@ -14,4 +14,24 @@ export default defineConfig({
       "Cache-Control": "no-store",
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: (id) => {
+          if (id.includes("node_modules")) {
+            if (id.includes("react")) {
+              return "vendor-react";
+            }
+            if (id.includes("@radix-ui")) {
+              return "vendor-radix";
+            }
+            return "vendor";
+          }
+        },
+      },
+    },
+    target: "esnext",
+    minify: "terser",
+    cssMinify: true,
+  },
 });

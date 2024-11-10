@@ -6,7 +6,7 @@ import { useTaskContext } from "@/context/task-context";
 import { useTaskChartData } from "@/hooks/useTaskChartData";
 import { useTaskTrends } from "@/hooks/useTaskTrends";
 
-export function DashboardPage() {
+export default function DashboardPage() {
   const { tasks } = useTaskContext();
   const chartData = useTaskChartData(tasks);
   const trends = useTaskTrends(tasks);
