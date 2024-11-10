@@ -14,6 +14,8 @@ import { TASK_PRIORITY_COLORS, TASK_STATUS_COLORS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { formatDate, isTaskOverdue } from "@/lib/formatters";
 import { Task, UpdateTaskInput } from "@/types/task";
+import { TaskStatusSelect } from "./TaskStatusSelect";
+import { TaskTags } from "./TaskTags";
 
 export function TaskList() {
   const { tasks, updateTask, deleteTask } = useTaskContext();
@@ -68,19 +70,7 @@ export function TaskList() {
                         {task.description}
                       </span>
                     )}
-                    {task.tags && task.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1 mt-1">
-                        {task.tags.map((tag) => (
-                          <Badge
-                            key={tag}
-                            variant="secondary"
-                            className="text-xs"
-                          >
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
+                    <TaskTags tags={task.tags || []} />
                   </div>
                 </TableCell>
                 <TableCell>
@@ -92,21 +82,10 @@ export function TaskList() {
                   </Badge>
                 </TableCell>
                 <TableCell>
-                  <select
-                    className={cn(
-                      "text-sm border rounded-md px-2 py-1",
-                      "bg-background hover:bg-accent transition-colors",
-                      TASK_STATUS_COLORS[task.status]
-                    )}
-                    value={task.status}
-                    onChange={(e) =>
-                      handleStatusChange(task, e.target.value as Task["status"])
-                    }
-                  >
-                    <option value="todo">A fazer</option>
-                    <option value="in-progress">Em andamento</option>
-                    <option value="done">Concluída</option>
-                  </select>
+                  <TaskStatusSelect
+                    status={task.status}
+                    onChange={(status) => handleStatusChange(task, status)}
+                  />
                 </TableCell>
                 <TableCell>
                   {task.dueDate ? (
