@@ -1,25 +1,14 @@
-import { createContext, useContext, ReactNode, useState } from "react";
-import {
-  Task,
-  CreateTaskInput,
-  UpdateTaskInput,
-  TaskStatus,
-  TaskPriority,
-} from "@/types/task";
+import { createContext, useContext, ReactNode } from "react";
+import { Task, CreateTaskInput, UpdateTaskInput } from "@/types/task";
 import { useTasks } from "@/hooks/useTasks";
-
-interface Filters {
-  search: string;
-  status: TaskStatus | "all";
-  priority: TaskPriority | "all";
-}
+import { useTaskFilters } from "@/hooks/useTaskFilters";
 
 interface TaskContextType {
   tasks: Task[];
   loading: boolean;
   error: string | null;
-  filters: Filters;
-  setFilters: (filters: Filters) => void;
+  filters: ReturnType<typeof useTaskFilters>["filters"];
+  setFilters: ReturnType<typeof useTaskFilters>["setFilters"];
   createTask: (data: CreateTaskInput) => Promise<Task>;
   updateTask: (id: string, data: UpdateTaskInput) => Promise<Task>;
   deleteTask: (id: string) => Promise<string>;
@@ -30,11 +19,7 @@ const TaskContext = createContext<TaskContextType | undefined>(undefined);
 export function TaskProvider({ children }: { children: ReactNode }) {
   const { tasks, loading, error, createTask, updateTask, deleteTask } =
     useTasks();
-  const [filters, setFilters] = useState<Filters>({
-    search: "",
-    status: "all",
-    priority: "all",
-  });
+  const { filters, setFilters } = useTaskFilters();
 
   const filteredTasks = tasks.filter((task) => {
     const matchesSearch =
