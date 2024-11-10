@@ -1,36 +1,24 @@
 import { CreateTaskInput, Task, UpdateTaskInput } from "@/types/task";
+import { api } from "./axios";
 
 export const tasksApi = {
-  getTasks: async (): Promise<Task[]> => {
-    const response = await fetch("/api/tasks");
-    if (!response.ok) throw new Error("Erro ao buscar tarefas");
-    return response.json();
+  getTasks: async () => {
+    const { data } = await api.get<Task[]>("/tasks");
+    return data;
   },
 
-  createTask: async (input: CreateTaskInput): Promise<Task> => {
-    const response = await fetch("/api/tasks", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(input),
-    });
-    if (!response.ok) throw new Error("Erro ao criar tarefa");
-    return response.json();
+  createTask: async (input: CreateTaskInput) => {
+    const { data } = await api.post<Task>("/tasks", input);
+    return data;
   },
 
-  updateTask: async (id: string, input: UpdateTaskInput): Promise<Task> => {
-    const response = await fetch(`/api/tasks/${id}`, {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(input),
-    });
-    if (!response.ok) throw new Error("Erro ao atualizar tarefa");
-    return response.json();
+  updateTask: async (id: string, input: UpdateTaskInput) => {
+    const { data } = await api.patch<Task>(`/tasks/${id}`, input);
+    return data;
   },
 
-  deleteTask: async (id: string): Promise<void> => {
-    const response = await fetch(`/api/tasks/${id}`, {
-      method: "DELETE",
-    });
-    if (!response.ok) throw new Error("Erro ao deletar tarefa");
+  deleteTask: async (id: string) => {
+    await api.delete(`/tasks/${id}`);
+    return id; // Retornando o ID para usar no onSuccess
   },
 };

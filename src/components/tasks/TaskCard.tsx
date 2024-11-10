@@ -12,9 +12,8 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EditTaskDialog } from "./EditTaskDialog";
-import { Trash2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
 import { useTaskContext } from "@/context/task-context";
+import { DeleteTaskDialog } from "./DeleteTaskDialog";
 
 interface TaskCardProps {
   task: Task;
@@ -93,14 +92,10 @@ export function TaskCard({ task }: TaskCardProps) {
         </select>
         <div className="flex gap-2">
           <EditTaskDialog task={task} onEditTask={handleEdit} />
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => deleteTask(task.id)}
-            className="text-destructive hover:text-destructive/80"
-          >
-            <Trash2 className="h-4 w-4" />
-          </Button>
+          <DeleteTaskDialog
+            taskTitle={task.title}
+            onConfirm={() => deleteTask(task.id)}
+          />
         </div>
       </CardFooter>
     </Card>

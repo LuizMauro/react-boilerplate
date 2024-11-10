@@ -22,7 +22,7 @@ interface TaskContextType {
   setFilters: (filters: Filters) => void;
   createTask: (data: CreateTaskInput) => Promise<Task>;
   updateTask: (id: string, data: UpdateTaskInput) => Promise<Task>;
-  deleteTask: (id: string) => Promise<void>;
+  deleteTask: (id: string) => Promise<string>;
 }
 
 const TaskContext = createContext<TaskContextType | undefined>(undefined);

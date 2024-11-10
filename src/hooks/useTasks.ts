@@ -1,73 +1,55 @@
-import { useState, useCallback, useEffect } from "react";
-import { Task, CreateTaskInput, UpdateTaskInput } from "@/types/task";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { Task, UpdateTaskInput } from "@/types/task";
 import { tasksApi } from "@/lib/api/tasks";
 
 export function useTasks() {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  const queryClient = useQueryClient();
 
-  const fetchTasks = useCallback(async () => {
-    try {
-      setLoading(true);
-      setError(null);
-      const data = await tasksApi.getTasks();
-      setTasks(data);
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao buscar tarefas");
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const {
+    data: tasks = [],
+    isLoading: loading,
+    error,
+  } = useQuery<Task[], Error>({
+    queryKey: ["tasks"],
+    queryFn: tasksApi.getTasks,
+  });
 
-  useEffect(() => {
-    fetchTasks();
-  }, [fetchTasks]);
+  const createTaskMutation = useMutation({
+    mutationFn: tasksApi.createTask,
+    onSuccess: (newTask) => {
+      queryClient.setQueryData<Task[]>(["tasks"], (old = []) => [
+        ...old,
+        newTask,
+      ]);
+    },
+  });
 
-  const createTask = useCallback(async (input: CreateTaskInput) => {
-    try {
-      setError(null);
-      const newTask = await tasksApi.createTask(input);
-      setTasks((prev) => [...prev, newTask]);
-      return newTask;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao criar tarefa");
-      throw err;
-    }
-  }, []);
-
-  const updateTask = useCallback(async (id: string, input: UpdateTaskInput) => {
-    try {
-      setError(null);
-      const updatedTask = await tasksApi.updateTask(id, input);
-      setTasks((prev) =>
-        prev.map((task) => (task.id === id ? updatedTask : task))
+  const updateTaskMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: UpdateTaskInput }) =>
+      tasksApi.updateTask(id, data),
+    onSuccess: (updatedTask) => {
+      queryClient.setQueryData<Task[]>(["tasks"], (old = []) =>
+        old.map((task) => (task.id === updatedTask.id ? updatedTask : task))
       );
-      return updatedTask;
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao atualizar tarefa");
-      throw err;
-    }
-  }, []);
+    },
+  });
 
-  const deleteTask = useCallback(async (id: string) => {
-    try {
-      setError(null);
-      await tasksApi.deleteTask(id);
-      setTasks((prev) => prev.filter((task) => task.id !== id));
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao deletar tarefa");
-      throw err;
-    }
-  }, []);
+  const deleteTaskMutation = useMutation({
+    mutationFn: tasksApi.deleteTask,
+    onSuccess: (_, deletedId) => {
+      queryClient.setQueryData<Task[]>(["tasks"], (old = []) =>
+        old.filter((task) => task.id !== deletedId)
+      );
+    },
+  });
 
   return {
     tasks,
     loading,
-    error,
-    fetchTasks,
-    createTask,
-    updateTask,
-    deleteTask,
+    error: error?.message || null,
+    createTask: createTaskMutation.mutateAsync,
+    updateTask: (id: string, data: UpdateTaskInput) =>
+      updateTaskMutation.mutateAsync({ id, data }),
+    deleteTask: deleteTaskMutation.mutateAsync,
   };
 }

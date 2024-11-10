@@ -7,9 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { EditTaskDialog } from "./EditTaskDialog";
-import { Trash2 } from "lucide-react";
+import { DeleteTaskDialog } from "./DeleteTaskDialog";
 import { useTaskContext } from "@/context/task-context";
 import { TASK_PRIORITY_COLORS, TASK_STATUS_COLORS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
@@ -130,14 +129,10 @@ export function TaskList() {
                 <TableCell>
                   <div className="flex items-center gap-2">
                     <EditTaskDialog task={task} onEditTask={handleEdit} />
-                    <Button
-                      variant="ghost"
-                      size="icon"
-                      onClick={() => deleteTask(task.id)}
-                      className="text-destructive hover:text-destructive/80"
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <DeleteTaskDialog
+                      taskTitle={task.title}
+                      onConfirm={() => deleteTask(task.id)}
+                    />
                   </div>
                 </TableCell>
               </TableRow>
