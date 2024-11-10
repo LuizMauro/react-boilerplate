@@ -1,6 +1,6 @@
 import { http, HttpResponse } from "msw";
 import { CreateTaskInput, Task, UpdateTaskInput } from "@/types/task";
-import { createTask } from "@/lib/task-utils";
+import { createTask } from "@/mocks/task-utils";
 
 // Nosso "banco de dados" em memória
 let tasks: Task[] = [
