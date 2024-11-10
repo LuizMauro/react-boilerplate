@@ -1,10 +1,23 @@
-import { Button } from "@/components/ui/button";
+import { Header } from "@/components/layout/Header";
+import { BaseLayout } from "@/components/layout/BaseLayout";
+import { useEffect } from "react";
+import { useTasks } from "@/hooks/useTasks";
 
 function App() {
+  const { tasks, loading, error, fetchTasks } = useTasks();
+
+  useEffect(() => {
+    fetchTasks();
+  }, [fetchTasks]);
+
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-      <h1 className="text-4xl font-bold text-blue-600">Olá Tailwind + Vite!</h1>
-      <Button>Clique aqui!</Button>
+    <div className="min-h-screen bg-background">
+      <Header />
+      <BaseLayout>
+        {loading && <p>Carregando...</p>}
+        {error && <p>Erro: {error}</p>}
+        <pre>{JSON.stringify(tasks, null, 2)}</pre>
+      </BaseLayout>
     </div>
   );
 }

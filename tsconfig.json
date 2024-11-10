@@ -9,6 +9,7 @@
     }
   ],
   "compilerOptions": {
+    "types": ["msw/node"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
